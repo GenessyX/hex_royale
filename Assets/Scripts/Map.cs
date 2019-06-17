@@ -23,6 +23,8 @@ public class Map : MonoBehaviour
 {
     public GameObject hex_prefab;
 
+    public int childCount;
+
     public int grid_width = 31;
     public int grid_height = 31; 
 
@@ -87,12 +89,15 @@ public class Map : MonoBehaviour
                 hex_on_screen.transform.localScale = new Vector3(1 ,sample*world_scale, 1);
                 hex_on_screen.transform.SetParent(this.transform);
                 hex_on_screen.AddComponent<Hex>();
-                hex_on_screen.GetComponent<Hex>().init(new Vector3((float)xPos, 0, (float)zPos), new Vector2(i, j), String.Format("Hexagon ({0}|{1})", i, j));
+                hex_on_screen.GetComponent<Hex>().init(new Vector3((float)xPos, (float)0.2*(sample*world_scale-1), (float)zPos), new Vector2(i, j), String.Format("Hexagon ({0}|{1})", i, j));
                 hex_on_screen.name = hex_on_screen.GetComponent<Hex>().name;
             }
             if (start_col > 0)
                 start_col--;
         }
+        childCount = this.transform.childCount;
+        GameObject.Find("Map").GetComponent<ChestSpawn>().Chest_Spawn();
+        //ChestSpawn.Chest();
     }
 
     void Awake()

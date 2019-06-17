@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
 
 public class Movement : MonoBehaviour
 {
+    public float speed = 0.005f;
+
     public GameObject player_prefab;
     public GameObject map;
     public Camera camera;
@@ -50,14 +52,21 @@ public class Movement : MonoBehaviour
     public Vector3 get_world_pos(GameObject map, Vector2 grid_pos)
     {
         Transform move_hex = map.transform.Find(string.Format("Hexagon ({0}|{1})", grid_pos.x, grid_pos.y));
-        return move_hex.GetComponent<Hex>().world_position + new Vector3(0, 0.2f * (move_hex.localScale.y - 1), 0);
+        return move_hex.GetComponent<Hex>().world_position;
     }
 
     public void update_pos(GameObject player_go)
     {
-        Transform move_hex = map.transform.Find(string.Format("Hexagon ({0}|{1})", player_go.GetComponent<Player>().position.x, player_go.GetComponent<Player>().position.y));
+        
+        Transform move_hex = map.transform.Find(string.Format("Hexagon ({0}|{1})", player_go.GetComponent<Player>().position.x , player_go.GetComponent<Player>().position.y));
+
         if (move_hex != null)
-            player_go.transform.position = move_hex.GetComponent<Hex>().world_position + new Vector3(0,0.2f*(move_hex.localScale.y-1), 0);
+        
+            //player_go.transform.Translate(move_hex.GetComponent<Hex>().world_position * Time.deltaTime * speed);       часть Вани
+
+            player_go.transform.position = move_hex.GetComponent<Hex>().world_position;
+        
+
     }
 
     public void Update()
@@ -94,10 +103,12 @@ public class Movement : MonoBehaviour
                 List<Vector2> path = pathFinder.GetComponent<PathFinder>().find_path(player_go.GetComponent<Player>().position,hex_pos);
                 foreach (Vector2 hex in path)
                 {
-                    movement = Instantiate(player_prefab, get_world_pos(map, new Vector2(hex.x, hex.y)), Quaternion.identity);
+
+                    //movement = Instantiate(player_prefab, get_world_pos(map, new Vector2(hex.x, hex.y)), Quaternion.identity);
                 }
-                //player_go.GetComponent<Player>().move_to(hex_pos);
-                //update_pos(player_go);
+
+                player_go.GetComponent<Player>().move_to(hex_pos);
+                update_pos(player_go);
             }
         }
         
