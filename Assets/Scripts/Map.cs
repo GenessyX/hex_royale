@@ -22,7 +22,7 @@ public class Hex : MonoBehaviour
 public class Map : MonoBehaviour
 {
     public GameObject hex_prefab;
-
+    public int worldScale;
     public int grid_width = 31;
     public int grid_height = 31; 
 
@@ -49,15 +49,21 @@ public class Map : MonoBehaviour
 
     // Start is called before the first frame update
 
-    private float generate_sample(int x, int y, float xOffset, float yOffset ,float scale)
+    private float generate_sample(int x, int y, float seed, float xOffset, float yOffset ,float scale)
     {
-        float iCoord = (xOffset + (float)x / grid_width) * scale;
-        float jCoord = (yOffset + (float)y / grid_height) * scale;
+        float iCoord = (xOffset + (float)seed + (float)x / grid_width) * scale;
+        float jCoord = (yOffset + (float)seed + (float)y / grid_height) * scale;
         return Mathf.PerlinNoise(iCoord, jCoord);
     }
 
     void Start()
     {
+
+        //UnityEngine.Random.InitState(System.Environment.TickCount);
+        float seed = UnityEngine.Random.Range(0f, (float)Math.Pow(2, 15));
+        float min_height = 10000;
+        float world_scale = 50;
+        Debug.Log(seed);
         Vector3 hex_scale = hex_prefab.transform.localScale;
         float hex_width = hex_scale.x;
         float hex_height = hex_scale.z;
@@ -82,9 +88,12 @@ public class Map : MonoBehaviour
                 xPos = (grid_mid - i) * (xOffset) + (grid_mid - j) * (0.5 * xOffset);
                 zPos = (grid_mid - j) * zOffset;
                 GameObject hex_on_screen = Instantiate(hex_prefab, new Vector3((float)xPos, 0, (float)zPos), Quaternion.identity);
-                float sample = generate_sample(i, j, 0, 0, 2);
-                float world_scale = 50;
-                hex_on_screen.transform.localScale = new Vector3(1 ,sample*world_scale, 1);
+                float sample = generate_sample(i, j, seed, 0, 0, worldScale);
+
+                float height = sample * world_scale;
+                hex_on_screen.transform.localScale = new Vector3(1 ,height, 1);
+                if (height < min_height)
+                    min_height = height;
                 hex_on_screen.transform.SetParent(this.transform);
                 hex_on_screen.AddComponent<Hex>();
                 hex_on_screen.GetComponent<Hex>().init(new Vector3((float)xPos, 0, (float)zPos), new Vector2(i, j), String.Format("Hexagon ({0}|{1})", i, j));
