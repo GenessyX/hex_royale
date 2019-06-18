@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 /*
 public class Player : MonoBehaviour
@@ -25,7 +24,7 @@ public class Player : MonoBehaviour
 
 public class Movement : MonoBehaviour
 {
-    public float speed = 0.005f;
+    public float speed = 0.5f;
 
     public GameObject player_prefab;
     private GameObject map;
@@ -63,11 +62,21 @@ public class Movement : MonoBehaviour
     {
         Transform move_hex = map.transform.Find(string.Format("Hexagon ({0}|{1})", player_go.GetComponent<Player>().get_position().x, player_go.GetComponent<Player>().get_position().y));
         if (move_hex != null)
-        
-            //player_go.transform.Translate(move_hex.GetComponent<Hex>().world_position * Time.deltaTime * speed);       часть Вани
+            if (player_go.transform.position == move_hex.GetComponent<Hex>().world_position)
+                player_go.transform.position = move_hex.GetComponent<Hex>().world_position;
+            else
+            {
+                //System.Threading.Thread.Sleep(100);
+                player_go.transform.Translate((move_hex.GetComponent<Hex>().world_position - player_go.transform.position) * Time.deltaTime * speed, Space.World);
+            }
+        /*
+        else if (move_hex == null)
+        {
+            
+        }
+        */
+        //player_go.transform.position = move_hex.GetComponent<Hex>().world_position;
 
-            player_go.transform.position = move_hex.GetComponent<Hex>().world_position;
-        
 
     }
 
@@ -101,19 +110,19 @@ public class Movement : MonoBehaviour
             if (where_to != null)
             {
                 Vector2 hex_pos = get_position_object(where_to);
-                Vector2 pos = player_go.GetComponent<Player>().get_position();
+                //Vector2 pos = player_go.GetComponent<Player>().get_position();
                 List<Vector2> path = pathFinder.GetComponent<PathFinder>().find_path(player_go.GetComponent<Player>().get_position(),hex_pos);
+                
                 foreach (Vector2 hex in path)
                 {
-
-                    //movement = Instantiate(player_prefab, get_world_pos(map, new Vector2(hex.x, hex.y)), Quaternion.identity);
+                    //System.Threading.Thread.Sleep(100);
+                    player_go.GetComponent<Player>().move_to(hex);
+                    
+                    update_pos(player_go);
+                    
                 }
-
-                player_go.GetComponent<Player>().move_to(hex_pos);
-                update_pos(player_go);
             }
         }
-        
     }
     
     public Vector2 get_position_object(Transform hex)
