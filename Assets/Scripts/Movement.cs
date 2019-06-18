@@ -3,24 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-/*
-public class Player : MonoBehaviour
-{
-    public Vector2 position;
-
-    public void init(Vector2 position)
-    {
-        this.position = position;
-    }
-
-    public void move_to(Vector2 where)
-    {
-        this.position = where;
-    }
-
-}
-*/
-
 
 public class Movement : MonoBehaviour
 {
