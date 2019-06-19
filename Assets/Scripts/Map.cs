@@ -27,7 +27,8 @@ public class Map : MonoBehaviour
 
     public int worldScale;
     public int grid_width = 31;
-    public int grid_height = 31; 
+    public int grid_height = 31;
+    private float seed;
 
     double xOffset = 1.02f;// + 0.05);
     double zOffset = 0.882f;// + 0.05*(0.75));
@@ -63,7 +64,7 @@ public class Map : MonoBehaviour
     {
 
         //UnityEngine.Random.InitState(System.Environment.TickCount);
-        float seed = UnityEngine.Random.Range(0f, (float)Math.Pow(2, 15));
+        seed = UnityEngine.Random.Range(0f, (float)Math.Pow(2, 10));
         float min_height = 10000;
         float world_scale = 50;
         Debug.Log(seed);
@@ -116,7 +117,7 @@ public class Map : MonoBehaviour
         //Application.targetFrameRate = 10;
     }
     // Update is called once per frame
-    /* Continuos generation
+    // /* Continuos generation
     void Update()
     {
         Vector3 hex_scale = hex_prefab.transform.localScale;
@@ -140,9 +141,10 @@ public class Map : MonoBehaviour
             for (int j = start_col; j < (start_col + cols); j++)
             {
                 Transform hex_on_screen = find_hex_by_grid(new Vector2(i, j), this.transform);
-                float sample = generate_sample(i, j, xGenOffset, yGenOffset, 2);
+                float sample = generate_sample(i, j, seed, xGenOffset, yGenOffset, 2);
                 float world_scale = 50;
                 hex_on_screen.localScale = new Vector3(1, sample * world_scale, 1);
+                hex_on_screen.GetComponent<Hex>().world_position.y = (float)0.2 * (sample * world_scale - 1);
             }
             if (start_col > 0)
                 start_col--;
@@ -151,5 +153,5 @@ public class Map : MonoBehaviour
         xGenOffset += xGenOffsetSpeed;
         yGenOffset += yGenOffsetSpeed;
     }
-    */
+    //*/
 }
