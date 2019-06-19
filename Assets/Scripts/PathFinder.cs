@@ -72,12 +72,17 @@ public class PathFinder : MonoBehaviour
             }
         }
         List<Vector2> path = new List<Vector2>();
-
+        path.Add(B);
         while (current.came_from != null)
         {
             path.Add(current.came_from.grid_pos);
             current = current.came_from;
         }
+        //path.Add(current.grid_pos);
+        
+        Debug.Log(111111111111111);
+        Debug.Log(B);
+        path.Reverse();
         current = null;
         to_open = null;
         opened = null;
