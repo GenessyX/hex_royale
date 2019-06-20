@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour
     public void Start()
     {
         map = GameObject.Find("Map");
-
+        path = new List<Vector2>();
         pathFinder = GameObject.Find("Player").GetComponent<PathFinder>();
 
         int grid_mid = (map.GetComponent<Map>().grid_width - 1) / 2;
@@ -82,13 +82,21 @@ public class Movement : MonoBehaviour
         if (timer >= 0.2)
         {
             timer = 0;
-            if (player_go.GetComponent<Player>().moves_count() > 0)
+            if (player_go.GetComponent<Player>().moves_count() > 0 && path.Count > 0)
             {
-                Vector2 next_move = player_go.GetComponent<Player>().make_move();
-                player_go.GetComponent<Player>().move_to(next_move);
-                //Debug.Log(player_go.GetComponent<Player>().get_position());
-                remove_path(next_move);
-                update_pos(player_go);
+                if (player_go.GetComponent<Player>().get_is_moving())
+                {
+                    Vector2 next_move = player_go.GetComponent<Player>().make_move();
+                    player_go.GetComponent<Player>().move_to(next_move);
+                    //Debug.Log(player_go.GetComponent<Player>().get_position());
+                    remove_path(next_move);
+                    path.RemoveAt(0);
+                    update_pos(player_go);
+                }
+            }
+            else if (path.Count == 0 && player_go.GetComponent<Player>().get_is_moving())
+            {
+                player_go.GetComponent<Player>().invert_move();
             }
         }
         
@@ -116,21 +124,28 @@ public class Movement : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log(player_go.GetComponent<Player>().get_is_moving());
             Transform where_to = get_mouse_hit();
             if (where_to != null)
             {
-                Vector2 hex_pos = get_position_object(where_to);
-                //Vector2 pos = player_go.GetComponent<Player>().get_position();
-                path = pathFinder.GetComponent<PathFinder>().find_path(player_go.GetComponent<Player>().get_position(),hex_pos);
-                build_path(path);
-                //player_go.GetComponent<Player>().add_moves(path);               
+                if (!player_go.GetComponent<Player>().get_is_moving() && path.Count == 0)
+                {
+                    Vector2 hex_pos = get_position_object(where_to);
+                    //Vector2 pos = player_go.GetComponent<Player>().get_position();
+                    path = pathFinder.GetComponent<PathFinder>().find_path(player_go.GetComponent<Player>().get_position(), hex_pos);
+                    build_path(path);
+                    //player_go.GetComponent<Player>().add_moves(path);               
                 }
             }
+        }
         if (Input.GetMouseButtonDown(1))
         {
-            //Debug.Log(11);
-            //Debug.Log(path[0]);
-            player_go.GetComponent<Player>().add_moves(path);
+            Debug.Log(player_go.GetComponent<Player>().get_is_moving());
+            if (!player_go.GetComponent<Player>().get_is_moving())
+            {
+                player_go.GetComponent<Player>().invert_move();
+                player_go.GetComponent<Player>().add_moves(path);
+            }
         }
     }
         

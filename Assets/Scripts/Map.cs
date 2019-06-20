@@ -8,12 +8,14 @@ public class Hex : MonoBehaviour
     public Vector2 grid_position;
     public Vector3 world_position;
     public string name;
+    public string type;
 
-    public void init(Vector3 world_position, Vector2 grid_position, string name)
+    public void init(Vector3 world_position, Vector2 grid_position, string name, string type)
     {
         this.world_position = world_position;
         this.grid_position = grid_position;
         this.name = name;
+        this.type = type;
     }
 
 }
@@ -51,6 +53,8 @@ public class Map : MonoBehaviour
     public Transform find_hex_by_grid(Vector2 grid_pos)
     {
         Transform hex = GameObject.Find("Map").transform.Find(string.Format("Hexagon ({0}|{1})", grid_pos.x, grid_pos.y));
+        if (hex == null)
+            hex = GameObject.Find("Map").transform.Find(string.Format("Water ({0}|{1})", grid_pos.x, grid_pos.y));
         return hex;
     }
 
@@ -112,6 +116,7 @@ public class Map : MonoBehaviour
                 //GameObject hex_on_screen;
                 GameObject curr_prefab;
                 string curr_name;
+                string curr_type;
                 xPos = (grid_mid - i) * (xOffset) + (grid_mid - j) * (0.5 * xOffset);
                 zPos = (grid_mid - j) * zOffset;
                 float sample = generate_sample(i, j, seed, 0, 0, worldScale);
@@ -121,17 +126,19 @@ public class Map : MonoBehaviour
                     curr_prefab = water_prefab;
                     curr_name = String.Format("Water ({0}|{1})", i, j);
                     water.Add(curr_name);
+                    curr_type = "Water";
                 }
                 else
                 {
                     curr_prefab = land_prefab;
                     curr_name = String.Format("Hexagon ({0}|{1})", i, j);
+                    curr_type = "Land";
                 }
                 GameObject hex_on_screen = Instantiate(curr_prefab, new Vector3((float)xPos, 0, (float)zPos), Quaternion.identity);
                 hex_on_screen.transform.localScale = new Vector3(1 ,height, 1);
                 hex_on_screen.transform.SetParent(this.transform);
                 hex_on_screen.AddComponent<Hex>();
-                hex_on_screen.GetComponent<Hex>().init(new Vector3((float)xPos, (float)0.2 * (sample * world_scale - 1), (float)zPos), new Vector2(i, j), curr_name);
+                hex_on_screen.GetComponent<Hex>().init(new Vector3((float)xPos, (float)0.2 * (sample * world_scale - 1), (float)zPos), new Vector2(i, j), curr_name, curr_type);
                 hex_on_screen.name = hex_on_screen.GetComponent<Hex>().name;
 
                 if (height < min_height)

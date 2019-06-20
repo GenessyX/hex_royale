@@ -11,7 +11,18 @@ public class Player : MonoBehaviour
     private int damage;
     private int armor;
     private List<Vector2> moves;
-   
+    private bool is_moving = false;
+
+    public void invert_move()
+    {
+        this.is_moving = !this.is_moving;
+    }
+
+    public bool get_is_moving()
+    {
+        return this.is_moving;
+    }
+
     public void init(Vector2 position, Inventory inventory, Squad squad, int move_limit)
     {
         this.position = position;

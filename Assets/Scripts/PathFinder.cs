@@ -29,17 +29,17 @@ public class PathFinder : MonoBehaviour
     public List<Vector2> find_neighbours(Vector2 hex)
     {
         List<Vector2> neighbours = new List<Vector2>();
-        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y)).childCount == 0)
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y)).childCount == 0 && (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y)).GetComponent<Hex>().type != "Water"))
             neighbours.Add(new Vector2(hex.x + 1, hex.y    ));
-        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y)).childCount == 0)
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y)).childCount == 0 && (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y)).GetComponent<Hex>().type != "Water"))
             neighbours.Add(new Vector2(hex.x - 1, hex.y    ));
-        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y - 1)).childCount == 0)
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y - 1)).childCount == 0 && (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y - 1)).GetComponent<Hex>().type != "Water"))
             neighbours.Add(new Vector2(hex.x + 1, hex.y - 1));
-        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y + 1)).childCount == 0)
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y + 1)).childCount == 0 && (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y + 1)).GetComponent<Hex>().type != "Water"))
             neighbours.Add(new Vector2(hex.x - 1, hex.y + 1));
-        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y + 1)).childCount == 0)
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y + 1)).childCount == 0 && (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y + 1)).GetComponent<Hex>().type != "Water"))
             neighbours.Add(new Vector2(hex.x    , hex.y + 1));
-        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y - 1)).childCount == 0)
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y - 1)).childCount == 0 && (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y - 1)).GetComponent<Hex>().type != "Water"))
             neighbours.Add(new Vector2(hex.x    , hex.y - 1));
         return neighbours;
     }
