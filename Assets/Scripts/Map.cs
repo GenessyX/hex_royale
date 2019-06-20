@@ -38,7 +38,7 @@ public class Map : MonoBehaviour
     public int worldScale;
     public int grid_width = 31;
     public int grid_height = 31;
-    private float seed;
+    //private float seed;
 
     double xOffset = 1.02f;// + 0.05);
     double zOffset = 0.882f;// + 0.05*(0.75));
@@ -211,7 +211,7 @@ public class Map : MonoBehaviour
     }
 
     // Update is called once per frame
-    // /* Continuos generation
+    /* Continuos generation
     void Update()
     {
         Vector3 hex_scale = hex_prefab.transform.localScale;
@@ -247,5 +247,5 @@ public class Map : MonoBehaviour
         xGenOffset += xGenOffsetSpeed;
         yGenOffset += yGenOffsetSpeed;
     }
-    //*/
+    */
 }
