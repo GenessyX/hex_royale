@@ -38,7 +38,6 @@ public class Map : MonoBehaviour
     public int worldScale;
     public int grid_width = 31;
     public int grid_height = 31;
-    private float seed;
 
     double xOffset = 1.02f;// + 0.05);
     double zOffset = 0.882f;// + 0.05*(0.75));
@@ -100,8 +99,6 @@ public class Map : MonoBehaviour
         int this_col = start_col;
         int this_row = start_row;
         int cols = grid_width - start_col;
-        float time = 0;
-        bool ascend = true;
         water = new List<string>();
 
         for (int i = 0; i < grid_height; i++)
@@ -140,6 +137,41 @@ public class Map : MonoBehaviour
                 if (height < min_height)
                     min_height = height;
 
+                float tree_gen = generate_sample(i, j, seed * 2, 0, 0, worldScale*5);
+                
+                if (tree_gen * 10 >= 5)
+                {
+                    if ((float)0.2 * (height - 1) > 2)
+                    {
+                        float tree = UnityEngine.Random.Range(0, 4);
+                        GameObject tree_prefab = tree_prefab1;
+                        float curr_height = 1.6f;
+                        if (tree < 1)
+                        {
+                            tree_prefab = tree_prefab1;
+                            curr_height = 1.6f;
+                        }
+                        else if (tree < 2)
+                        {
+                            tree_prefab = tree_prefab2;
+                            curr_height = 1.4f;
+                        }
+                        else if (tree < 3)
+                        {
+                            tree_prefab = tree_prefab3;
+                            curr_height = 1.6f;
+                        }
+                        else if (tree < 4)
+                        {
+                            tree_prefab = tree_prefab4;
+                            curr_height = 1.4f;
+                        }
+                        GameObject tree_go = Instantiate(tree_prefab, new Vector3((float)xPos, hex_on_screen.GetComponent<Hex>().world_position.y + curr_height, (float)zPos), Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0));
+                        tree_go.transform.SetParent(hex_on_screen.transform);
+                        trees_transform.Add(tree_go.transform);
+                    }
+                }
+                /*
                 if (hex_on_screen.GetComponent<Hex>().world_position.y >= 4)
                 {
                     float tree = UnityEngine.Random.Range(0, 4);
@@ -166,9 +198,11 @@ public class Map : MonoBehaviour
                         curr_height = 1.4f;
                     }
                     GameObject tree_go = Instantiate(tree_prefab, new Vector3((float)xPos, hex_on_screen.GetComponent<Hex>().world_position.y + curr_height, (float)zPos), Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0));
+                    tree_go.transform.SetParent(hex_on_screen.transform);
                     trees_transform.Add(tree_go.transform);
 
                 }
+                */
             }
             if (start_col > 0)
                 start_col--;
@@ -211,7 +245,7 @@ public class Map : MonoBehaviour
     }
 
     // Update is called once per frame
-    // /* Continuos generation
+    /* Continuos generation
     void Update()
     {
         Vector3 hex_scale = hex_prefab.transform.localScale;
@@ -247,5 +281,5 @@ public class Map : MonoBehaviour
         xGenOffset += xGenOffsetSpeed;
         yGenOffset += yGenOffsetSpeed;
     }
-    //*/
+    */
 }
