@@ -10,14 +10,40 @@ public class Player : MonoBehaviour
     private int move_limit;
     private int damage;
     private int armor;
-
-    
+    private List<Vector2> moves;
+   
     public void init(Vector2 position, Inventory inventory, Squad squad, int move_limit)
     {
         this.position = position;
         this.inventory = inventory;
         this.squad = squad;
         this.move_limit = move_limit;
+        this.moves = new List<Vector2>();
+    }
+
+    public void add_moves(List<Vector2> _moves)
+    {
+        for (int i = 0; i < _moves.Count; i++)
+        {
+            this.moves.Add(_moves[i]);
+        }
+    }
+
+    public List<Vector2> output_moves()
+    {
+        return this.moves;
+    }
+
+    public Vector2 make_move()
+    {
+        Vector2 temp = this.moves[0];
+        this.moves.RemoveAt(0);
+        return temp;
+    }
+
+    public int moves_count()
+    {
+        return this.moves.Count;
     }
 
     public void move_to(Vector2 position)

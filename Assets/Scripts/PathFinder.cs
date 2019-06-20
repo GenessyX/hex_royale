@@ -29,12 +29,18 @@ public class PathFinder : MonoBehaviour
     public List<Vector2> find_neighbours(Vector2 hex)
     {
         List<Vector2> neighbours = new List<Vector2>();
-        neighbours.Add(new Vector2(hex.x + 1, hex.y    ));
-        neighbours.Add(new Vector2(hex.x - 1, hex.y    ));
-        neighbours.Add(new Vector2(hex.x + 1, hex.y - 1));
-        neighbours.Add(new Vector2(hex.x - 1, hex.y + 1));
-        neighbours.Add(new Vector2(hex.x    , hex.y + 1));
-        neighbours.Add(new Vector2(hex.x    , hex.y - 1));
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y)).childCount == 0)
+            neighbours.Add(new Vector2(hex.x + 1, hex.y    ));
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y)).childCount == 0)
+            neighbours.Add(new Vector2(hex.x - 1, hex.y    ));
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x + 1, hex.y - 1)).childCount == 0)
+            neighbours.Add(new Vector2(hex.x + 1, hex.y - 1));
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x - 1, hex.y + 1)).childCount == 0)
+            neighbours.Add(new Vector2(hex.x - 1, hex.y + 1));
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y + 1)).childCount == 0)
+            neighbours.Add(new Vector2(hex.x    , hex.y + 1));
+        if (GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(new Vector2(hex.x, hex.y - 1)).childCount == 0)
+            neighbours.Add(new Vector2(hex.x    , hex.y - 1));
         return neighbours;
     }
 
@@ -78,10 +84,6 @@ public class PathFinder : MonoBehaviour
             path.Add(current.came_from.grid_pos);
             current = current.came_from;
         }
-        //path.Add(current.grid_pos);
-        
-        Debug.Log(111111111111111);
-        Debug.Log(B);
         path.Reverse();
         current = null;
         to_open = null;
