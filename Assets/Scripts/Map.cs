@@ -48,9 +48,9 @@ public class Map : MonoBehaviour
     public float xGenOffsetSpeed = 0.001f;
     public float yGenOffsetSpeed = 0.001f;
 
-    public Transform find_hex_by_grid(Vector2 grid_pos, Transform map)
+    public Transform find_hex_by_grid(Vector2 grid_pos)
     {
-        Transform hex = map.Find(string.Format("Hexagon ({0}|{1})", grid_pos.x, grid_pos.y));
+        Transform hex = GameObject.Find("Map").transform.Find(string.Format("Hexagon ({0}|{1})", grid_pos.x, grid_pos.y));
         return hex;
     }
 
@@ -64,9 +64,9 @@ public class Map : MonoBehaviour
         return water_transform;
     }
 
-    public Vector3 grid_to_world(Vector2 grid_pos, Transform map)
+    public Vector3 grid_to_world(Vector2 grid_pos)
     {
-        Transform hex = find_hex_by_grid(grid_pos, map);
+        Transform hex = find_hex_by_grid(grid_pos);
         return hex.GetComponent<Hex>().world_position;
     }
 
@@ -171,38 +171,6 @@ public class Map : MonoBehaviour
                         trees_transform.Add(tree_go.transform);
                     }
                 }
-                /*
-                if (hex_on_screen.GetComponent<Hex>().world_position.y >= 4)
-                {
-                    float tree = UnityEngine.Random.Range(0, 4);
-                    GameObject tree_prefab = tree_prefab1;
-                    float curr_height = 1.6f;
-                    if (tree < 1)
-                    {
-                        tree_prefab = tree_prefab1;
-                        curr_height = 1.6f;
-                    }
-                    else if (tree < 2)
-                    {
-                        tree_prefab = tree_prefab2;
-                        curr_height = 1.4f;
-                    }
-                    else if (tree < 3)
-                    {
-                        tree_prefab = tree_prefab3;
-                        curr_height = 1.6f;
-                    }
-                     else if (tree < 4)
-                    {
-                        tree_prefab = tree_prefab4;
-                        curr_height = 1.4f;
-                    }
-                    GameObject tree_go = Instantiate(tree_prefab, new Vector3((float)xPos, hex_on_screen.GetComponent<Hex>().world_position.y + curr_height, (float)zPos), Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0));
-                    tree_go.transform.SetParent(hex_on_screen.transform);
-                    trees_transform.Add(tree_go.transform);
-
-                }
-                */
             }
             if (start_col > 0)
                 start_col--;
@@ -219,16 +187,15 @@ public class Map : MonoBehaviour
 
         //Application.targetFrameRate = 10;
     }
-
+    /*
     void Update()
     {
-        /*
         foreach (Transform tree_transform in trees_transform)
         {
             float sample = generate_sample((int)tree_transform.position.x, (int)tree_transform.position.y, seed, xGenOffset, yGenOffset, 1);
             tree_transform.rotation = Quaternion.Euler((sample - 0.5f) * 20, 0, (sample - 0.5f)* 50);
         }
-        */
+
 
         foreach (Transform water_hex in water_transform)
         {
@@ -243,6 +210,7 @@ public class Map : MonoBehaviour
         xGenOffset += xGenOffsetSpeed;
         yGenOffset += yGenOffsetSpeed;
     }
+    */
 
     // Update is called once per frame
     /* Continuos generation

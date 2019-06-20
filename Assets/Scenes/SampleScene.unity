@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -304,6 +305,64 @@ Skybox:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 7d1430089afb5854892670b854d1d684, type: 2}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ef8c68bade09b41aca258d42a632f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastTab: 0
+  movementSettingsFoldout: 0
+  zoomingSettingsFoldout: 0
+  rotationSettingsFoldout: 0
+  heightSettingsFoldout: 0
+  mapLimitSettingsFoldout: 0
+  targetingSettingsFoldout: 0
+  inputSettingsFoldout: 0
+  useFixedUpdate: 0
+  keyboardMovementSpeed: 15
+  screenEdgeMovementSpeed: 15
+  followingSpeed: 5
+  rotationSped: 3
+  panningSpeed: 30
+  mouseRotationSpeed: 10
+  autoHeight: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxHeight: 10
+  minHeight: 15
+  heightDampening: 5
+  keyboardZoomingSensitivity: 2
+  scrollWheelZoomingSensitivity: 25
+  limitMap: 1
+  limitX: 50
+  limitY: 50
+  targetFollow: {fileID: 0}
+  targetOffset: {x: 0, y: 0, z: 0}
+  useScreenEdgeInput: 1
+  screenEdgeBorder: 25
+  useKeyboardInput: 1
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
+  usePanning: 1
+  panningKey: 325
+  useKeyboardZooming: 1
+  zoomInKey: 101
+  zoomOutKey: 113
+  useScrollwheelZooming: 1
+  zoomingAxis: Mouse ScrollWheel
+  useKeyboardRotation: 1
+  rotateRightKey: 120
+  rotateLeftKey: 122
+  useMouseRotation: 1
+  mouseRotationKey: 324
 --- !u!1 &1595284667
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,15 +391,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 673cb869b0769844aaa3e5bf3818a24d, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  land_prefab: {fileID: 1901911034279994, guid: 61a4f649633a1f94abeb21559df74bd4,
+  m_Name: 
+  m_EditorClassIdentifier: 
+  land_prefab: {fileID: 1859274740467254, guid: 9c6353c0a6f5e524b8c947bc6aa1c756,
     type: 3}
   water_prefab: {fileID: 1389125948638888, guid: a9684bd94f9c39149a3724d15b5151a6,
     type: 3}
   tree_prefab1: {fileID: 100000, guid: aa239c06786a61746b4cda58643b04e7, type: 3}
-  tree_prefab2: {fileID: 100000, guid: b56c09ab3e7ead14c9314cefb708a1bd, type: 3}
-  tree_prefab3: {fileID: 100000, guid: c31f4639a09d5af438e277604e13e6d9, type: 3}
+  tree_prefab2: {fileID: 100000, guid: c31f4639a09d5af438e277604e13e6d9, type: 3}
+  tree_prefab3: {fileID: 100000, guid: b56c09ab3e7ead14c9314cefb708a1bd, type: 3}
   tree_prefab4: {fileID: 100000, guid: 0d2a420ad355ae548badbdb250c4c345, type: 3}
   water: []
   water_transform: []
@@ -378,8 +437,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35a829f56e2111c4d83e338020b3cc88, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   chest_prefab: {fileID: 115298, guid: 4ed3d4737085031488d31a766909bf88, type: 3}
 --- !u!1 &1786580322
 GameObject:
@@ -409,12 +468,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 514ff45d1919f4f40ac9383b01ab1ab4, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   speed: 0.5
   player_prefab: {fileID: 1884904741310042, guid: 99903ff7f2c772241902437b5ea27a4f,
     type: 3}
   camera: {fileID: 963194227}
+  path: []
+  path_prefab: {fileID: 1125799551299764, guid: 4dfdc0faa2101104796fb91f4c9b60ce,
+    type: 3}
+  timer: 0
 --- !u!4 &1786580324
 Transform:
   m_ObjectHideFlags: 0
@@ -439,5 +502,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48ec64e0db6966c42ae648578d8c4f5e, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
