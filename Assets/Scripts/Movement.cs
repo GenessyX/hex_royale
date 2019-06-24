@@ -64,8 +64,8 @@ public class Movement : MonoBehaviour
         for (int i = 0; i < path.Count; i++)
         {
             Vector3 path_pos = GameObject.Find("Map").GetComponent<Map>().grid_to_world(path[i]);
-            GameObject path_hex = Instantiate(path_prefab, path_pos + new Vector3(0,0.215f,0), Quaternion.identity);
-            path_hex.transform.SetParent(GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(path[i]));
+            GameObject path_hex = Instantiate(path_prefab, path_pos + new Vector3(0,0.215f,0), Quaternion.identity, GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(path[i]));
+            //path_hex.transform.SetParent(GameObject.Find("Map").GetComponent<Map>().find_hex_by_grid(path[i]));
             path_hex.name = "path";
         }
     }
@@ -124,7 +124,7 @@ public class Movement : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(player_go.GetComponent<Player>().get_is_moving());
+            //Debug.Log(player_go.GetComponent<Player>().get_is_moving());
             Transform where_to = get_mouse_hit();
             if (where_to != null)
             {
@@ -140,7 +140,7 @@ public class Movement : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log(player_go.GetComponent<Player>().get_is_moving());
+            //Debug.Log(player_go.GetComponent<Player>().get_is_moving());
             if (!player_go.GetComponent<Player>().get_is_moving())
             {
                 player_go.GetComponent<Player>().invert_move();

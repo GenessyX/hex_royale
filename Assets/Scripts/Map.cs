@@ -18,6 +18,25 @@ public class Hex : MonoBehaviour
         this.type = type;
     }
 
+    void OnMouseEnter()
+    {
+        if (gameObject.transform.childCount == 0)
+            gameObject.transform.localScale += new Vector3(0, 1, 0);
+        if (gameObject.transform.childCount > 0)
+            if (gameObject.transform.GetChild(0).gameObject.name == "path")
+                gameObject.transform.localScale += new Vector3(0, 1, 0);
+        Debug.Log(GameObject.Find("Map").GetComponent<Map>().grid_to_world(this.grid_position));
+    }
+
+    void OnMouseExit()
+    {
+        if (gameObject.transform.childCount == 0)
+            gameObject.transform.localScale -= new Vector3(0, 1, 0);
+        if (gameObject.transform.childCount > 0)
+            if (gameObject.transform.GetChild(0).gameObject.name == "path")
+                gameObject.transform.localScale -= new Vector3(0, 1, 0);
+    }
+
 }
 
 
